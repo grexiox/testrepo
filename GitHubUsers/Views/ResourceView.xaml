@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:GitHubUsers.ViewModel"
+                    xmlns:local="clr-namespace:GitHubUsers.Views">
+
+    <DataTemplate x:Key="UserItem" DataType="{x:Type vm:UserViewModel}">
+        <StackPanel>
+            <TextBlock Text="{Binding Login}"></TextBlock>
+            <TextBlock Text="{Binding NumberOfRepository}"></TextBlock>
+        </StackPanel>
+    </DataTemplate>
+    
+</ResourceDictionary>
