@@ -67,6 +67,7 @@
     <Compile Include="Command\CommandHandler.cs" />
     <Compile Include="Events\UserListDownloaded.cs" />
     <Compile Include="Model\DataManager.cs" />
+    <Compile Include="Model\RepoModel.cs" />
     <Compile Include="Model\UserModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
