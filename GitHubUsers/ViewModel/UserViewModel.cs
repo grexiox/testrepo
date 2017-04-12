@@ -10,14 +10,14 @@ namespace GitHubUsers.ViewModel
 {
     public class UserViewModel
     {
-        public UserViewModel(string login,BitmapImage bitmapImage,int numberOfRepositories)
+        public UserViewModel(string login,string url,int numberOfRepositories)
         {
             Login = login;
-            Avatar = bitmapImage;
+            Avatar = url;
             NumberOfRepository = numberOfRepositories;
         }
         public string Login { get; private set; }
-        public BitmapImage Avatar { get; private set; }
+        public string Avatar { get; private set; }
         public int NumberOfRepository { get; private set; }
     }
 }

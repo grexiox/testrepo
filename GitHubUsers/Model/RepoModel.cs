@@ -8,6 +8,6 @@ namespace GitHubUsers.Model
 {
     public class RepoModel
     {
-        public string login { get; set; }
+        public int public_repos { get; set; }
     }
 }

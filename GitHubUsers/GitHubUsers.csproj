@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
@@ -66,9 +67,10 @@
     </ApplicationDefinition>
     <Compile Include="Command\CommandHandler.cs" />
     <Compile Include="Events\UserListDownloaded.cs" />
-    <Compile Include="Model\DataManager.cs" />
+    <Compile Include="Managers\DataManager.cs" />
     <Compile Include="Model\RepoModel.cs" />
     <Compile Include="Model\UserModel.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
     <Page Include="MainWindow.xaml">

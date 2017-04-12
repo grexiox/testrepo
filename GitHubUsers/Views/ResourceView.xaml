@@ -3,11 +3,17 @@
                     xmlns:vm="clr-namespace:GitHubUsers.ViewModel"
                     xmlns:local="clr-namespace:GitHubUsers.Views">
 
-    <DataTemplate x:Key="UserItem" DataType="{x:Type vm:UserViewModel}">
-        <StackPanel>
-            <TextBlock Text="{Binding Login}"></TextBlock>
-            <TextBlock Text="{Binding NumberOfRepository}"></TextBlock>
-        </StackPanel>
+    <DataTemplate x:Key="AvatarDataTemplate" DataType="{x:Type vm:UserViewModel}">
+        <Image Source="{Binding Avatar}" Width="60" Height="60" Margin="15 0 15 0"/>
     </DataTemplate>
-    
+    <DataTemplate x:Key="UsersDataGridTemplate" DataType="{x:Type vm:MainWindowViewModel}">
+        <DataGrid ItemsSource="{Binding UserViewModelCollection}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn CellTemplate="{StaticResource AvatarDataTemplate}" Header="Avatar"/>
+                <DataGridTextColumn Binding="{Binding Login}" CanUserSort="False" IsReadOnly="True" Header="Login"/>
+                <DataGridTextColumn Binding="{Binding NumberOfRepository }" CanUserSort="False" IsReadOnly="True" Header="Repo count"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DataTemplate>
+
 </ResourceDictionary>
