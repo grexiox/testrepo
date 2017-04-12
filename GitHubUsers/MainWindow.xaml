@@ -8,7 +8,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         DataContext="{StaticResource MainViewModel}"
-        Title="GitHubUsers" Height="350" Width="525">
+        Title="{Binding Title}" Height="350" Width="525">
     <Window.Resources>
         <ResourceDictionary Source="Views/ResourceView.xaml"/>
     </Window.Resources>

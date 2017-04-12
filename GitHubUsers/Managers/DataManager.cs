@@ -16,11 +16,12 @@ namespace GitHubUsers.Managers
         private static DataManager _instance = null;
         private static object _syncRoot = new object();
         private readonly string _url = "https://api.github.com/users";
-        private const string Token = "e7f2a01795e0ab789e383ed4131fc27ad8fff0ce";
+        private const string Token = "cc66e817c9839d8d6756a324cdc46cdabd076ef1";
         private readonly JavaScriptSerializer _javaScriptSerializer = new JavaScriptSerializer();
-        
+        private readonly EventHandler<string> _eventHandler;
         private DataManager()
         {
+            _eventHandler+=EventHandlerMoreUsers;
         }
 
         public EventHandler<UserListDownloaded> UserPackageDownloaded;
@@ -46,12 +47,12 @@ namespace GitHubUsers.Managers
         public async void DownloadUsers(string url=null)
         {
             url = url ?? _url;
-            var users = await DownloadJson(url,JsonType.Users);
+            var users = await DownloadJson(url);
             var userList = _javaScriptSerializer.Deserialize<List<UserModel>>(users);
             List<Task<string>> taskListrepo = new List<Task<string>>();
             foreach (var user in userList)
             {
-                taskListrepo.Add(DownloadJson(user.url, JsonType.Repository));
+                taskListrepo.Add(DownloadJson(user.url));
             }
 
             var userViewModelList = new List<UserViewModel>();
@@ -66,7 +67,7 @@ namespace GitHubUsers.Managers
         }
 
 
-        private async Task<string> DownloadJson(string url, JsonType jsonType)
+        private async Task<string> DownloadJson(string url)
         {
             url += string.Format("?access_token={0}", Token);
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
@@ -79,14 +80,20 @@ namespace GitHubUsers.Managers
                 using (Stream responseStream = response.GetResponseStream())
                 {
                     StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string nextPage= response.Headers["Link"];
+                    _eventHandler(this, nextPage);
                     return reader.ReadToEnd();
                 }
             }
         }
-        enum JsonType
+
+        private void EventHandlerMoreUsers(object sender, string nextPage)
         {
-            Users,
-            Repository
+            if (nextPage!=null && !nextPage.Contains("last"))
+            {
+                string url = nextPage.Substring(nextPage.IndexOf("<", StringComparison.Ordinal) + 1, nextPage.IndexOf(">") - 1);
+                DownloadUsers(url);
+            }
         }
     }
 }

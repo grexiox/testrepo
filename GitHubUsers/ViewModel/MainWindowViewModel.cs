@@ -1,16 +1,13 @@
 ﻿using GitHubUsers.Command;
-using GitHubUsers.Model;
+using GitHubUsers.Events;
+using GitHubUsers.Managers;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using GitHubUsers.Annotations;
-using GitHubUsers.Events;
-using GitHubUsers.Managers;
 
 namespace GitHubUsers.ViewModel
 {
@@ -25,17 +22,16 @@ namespace GitHubUsers.ViewModel
 
         private void UserPackageDownloaded(object sender, UserListDownloaded userListDownloaded)
         {
-            //UserViewModelCollection.Concat(userListDownloaded.UserViewModelList);
             App.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     foreach (var user in userListDownloaded.UserViewModelList)
                     {
                         UserViewModelCollection.Add(user);
                     }
+                    Title = string.Format("GitHubUsers={0}", UserViewModelCollection.Count);
+                    OnPropertyChanged(nameof(Title));
                 })
             );
-            
-            OnPropertyChanged(nameof(UserViewModelCollection));
         }
 
         ICommand _loadedWindowCommand;
@@ -55,6 +51,7 @@ namespace GitHubUsers.ViewModel
             });
         }
 
+        public string Title { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
